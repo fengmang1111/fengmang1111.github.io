@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 手语识别方向 — 手部关键点检测与手势识别</title>
+    <style>
+        body {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.8;
+            color: #333;
+        }
+        h1 { border-bottom: 2px solid #4A90D9; padding-bottom: 10px; }
+        h2 { color: #4A90D9; margin-top: 30px; }
+        video { width: 100%; margin: 15px 0; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .note { background: #f0f7ff; padding: 15px; border-radius: 6px; border-left: 4px solid #4A90D9; margin-top: 20px; }
+        ul { padding-left: 20px; }
+        li { margin: 5px 0; }
+        a { color: #4A90D9; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <h1>A1 手语识别方向 — 手部关键点检测与手势识别</h1>
+
+    <h2>个人介绍</h2>
+    <p>老师您好，我是曹亿，是上海大学-计算机学院-计科专业的大一学生。对手语无障碍沟通领域感兴趣，认为本项目能切实帮助听障人士解决就医沟通难题，真心觉得很有价值，所以我选择 A1 方向作为选题（通过手部关键点检测和手势识别，也为后续项目中的手语识别模块打下基础），也很期待能有幸加入项目组，收获一段难忘的项目经历。</p>
+
+    <h2>Demo 演示</h2>
+    <video src="assets/demo.mp4" controls></video>
+
+    <h2>实现功能</h2>
+    <ul>
+        <li><strong>手部关键点检测</strong>：使用 MediaPipe Hands 实时检测 21 个手部关键点，并绘制骨架连线</li>
+        <li><strong>左右手识别</strong>：自动区分左右手，并在画面中标注</li>
+        <li><strong>手指计数</strong>：基于关键点角度计算，实时统计伸出的手指数量（0–5）</li>
+        <li><strong>石头剪刀布识别</strong>：在手指计数基础上，实现石头（0 指）、剪刀（2 指）、布（5 指）三种手势的分类</li>
+    </ul>
+
+    <h2>技术方案</h2>
+    <p>本 Demo 使用 <strong>MediaPipe Hands</strong> 框架实现手部 21 个关键点的实时检测与可视化。通过 OpenCV 调用摄像头，利用 MediaPipe 预训练模型对每帧图像进行手部定位与关键点回归，并绘制骨架连线。</p>
+    <p><strong>手指计数：</strong>通过计算指尖、指关节与手腕三点之间的角度来判断手指是否伸直。当夹角大于 150° 时判定为伸出状态，遍历五根手指得到最终计数。</p>
+    <p><strong>左右手识别：</strong>直接读取 MediaPipe 返回的 Handedness 分类结果，根据标签在画面中标注对应手部信息。</p>
+    <p><strong>石头剪刀布：</strong>基于手指计数进行规则映射——0 根手指对应石头，2 根手指对应剪刀，5 根手指对应布。</p>
+
+    <div class="note">
+        <strong>环境搭建与问题排查记录</strong><br>
+        在 Python 3.14 + MediaPipe 最新版环境下，完成了虚拟环境搭建、清华镜像源配置、OpenCV 安装。排查过程中解决了摄像头权限、API 版本兼容等问题，最终成功跑通实时手部检测 Demo，并在此基础上扩展了手指计数与手势识别功能。
+    </div>
+
+    <h2>项目日志</h2>
+    <ul>
+        <li><a href="logs/527晚｜任务接收、制定计划、配置环境.pdf" target="_blank">5月27日 晚 — 任务接收、制定计划、配置环境</a></li>
+        <li><a href="logs/528晨｜跑通demo、录屏.pdf" target="_blank">5月28日 晨 — 跑通 Demo、录屏</a></li>
+        <li><a href="logs/528晚｜创建网页、下载git、建立GitHub仓库并上传.pdf" target="_blank">5月28日 晚 — 创建网页、下载 Git、建立 GitHub 仓库并上传</a></li>
+        <li><a href="logs/529晨｜跑通demo v2.0（左右、计数、手势）.pdf" target="_blank">5月29日 晨 — 跑通 Demo v2.0（左右手识别、手指计数、手势识别）</a></li>
+        <li><a href="logs/529午后｜更新网页、视频、并上传提交.pdf" target="_blank">5月29日 午后 — 更新网页、视频，并上传提交</a></li>
+    </ul>
+
+</body>
+</html>
